@@ -1,0 +1,61 @@
+export const theme = {
+  colors: {
+    dark_blue: '#1F2D3D',
+    black: '#161818',
+    indigo: '#273444',
+    white: '#FFFFFF',
+    green_active: '#00B856',
+    white_hover: '#F4F4F4',
+    white_active: '#D3DCE6',
+    milk_white: '#E5E9F2',
+    lite_green: '#009E5A',
+    green_hover: '#2EDB8A',
+    green_disabled: '#50AE7C',
+    dark_gray: '#3C4858',
+    light_gray: '#8492A6',
+    gray: '#494952',
+    white_disabled: '#E5E9F2',
+    white_default: '#ACB5B8',
+    gray_default: '#8391A5',
+    lite_gray: '#D1DBE5',
+    gray_hover: '#E7EBEF',
+
+    text: {
+      white_100: '#E4E4FF',
+      white_80: '#BBB6DA',
+      white_40: '#685FA7',
+      white_30: '#62548B',
+      white_10: '#3E2C69',
+      blue_25: '#17087B',
+    },
+    White: {
+      white_100: '#E4E4FF',
+      white_80: '#BBB6DA',
+      white_40: '#685FA7',
+      white_30: '#62548B',
+      white_10: '#2B1759',
+    },
+    blue: {
+      blue_normal: '#1F1EFE',
+      blue_70: '#1E15C7',
+      blue_55: '#14003C',
+      blue_25: '#17087B',
+      blue_20: '#16066C',
+      blue_5: '#140150',
+      blue_dark: '#000046',
+      blue_modal: '#0B002C',
+    },
+    red: {
+      red_light: '#EF7A80',
+      red_dark: ' #EA525A',
+    },
+    label: {
+      label_light: '#E4E4FF',
+      label_dark: '#17087B',
+    },
+  },
+
+  fonts: {
+    nunito: 'Nunito',
+  },
+};
