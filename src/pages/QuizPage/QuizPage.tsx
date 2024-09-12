@@ -23,10 +23,10 @@ const QuizPage = () => {
   // const iframeWrapper = useRef<HTMLDivElement>(null);
 
   return (
-      <div className='w-[100vw] h-[100vh] bg-white-hover'>
-    <div className='fixed left-[20%] top-[-4%] w-[1080px] h-[600px] bg-white p-[40px] mx-auto mt-[10%] rounded-[15px]'>
+      // <div className='w-[100vw] h-[100vh] bg-white-hover'>
+    <div className='w-full h-full bg-white p-[10px]'>
       {video && (
-        <div className='mt-[8%] ml-[15%]'>
+        <div className=''>
           {video && video.quizIds.length > 0 ? (
             <Quiz publicId={video.quizIds[0]} playlistId={playlistId} goToTime={()=>{}} />
           ) : (
@@ -37,7 +37,7 @@ const QuizPage = () => {
         </div>
       )}
     </div>
-      </div>
+      // </div>
   );
 };
 

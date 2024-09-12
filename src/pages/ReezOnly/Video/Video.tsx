@@ -69,7 +69,7 @@ export const Video = () => {
 
   return (
       <div className='w-[100vw] h-[100vh] bg-white-hover'>
-      <div className='fixed left-[20%] top-[-4%] flex gap-[14px] w-[1080px] h-[600px] bg-white p-[40px] mt-[10%] mx-auto rounded-[15px]'>
+      <div className='flex gap-[14px] w-full h-full bg-white p-[10px]'>
         <div>
           <div className='mb-[14px]'>
             <InputSearchTimecodes getSearch={getSearchVideosHandler} />

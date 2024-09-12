@@ -49,7 +49,7 @@ export const SearchResultPage = () => {
                 onChange={onSearch}
                 defaultValue={params.get('search') ?? ''}
                 placeholder='Какие слова ищем в этом курсе?'
-                className='w-[945px] h-[40px] focus:outline-none focus:border-light-gray self-end pl-[16px] pr-[45px] pt-[7px] pb-[10px] border-[#EDEFF3] border-[1px] rounded-[9px] text-[16px] text-dark-blue'
+                className='w-[940px] h-[40px] focus:outline-none focus:border-light-gray self-end pl-[16px] pr-[45px] pt-[7px] pb-[10px] border-[#EDEFF3] border-[1px] rounded-[9px] text-[16px] text-dark-blue'
             />
             <div className='absolute right-[2%] top-[20%]'>
               <SearchIcon/>
@@ -58,7 +58,7 @@ export const SearchResultPage = () => {
           {/*<SearchInput suggestionsList={[]}/>*/}
         </div>
         <div>
-          <div className='absolute left-[4%] top-[16%]'>
+          <div className=''>
             <Toggle title='Искать по точному совпадению' checked={isChecked} onChange={() => {
             }}/>
           </div>

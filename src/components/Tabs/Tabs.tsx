@@ -7,7 +7,7 @@ export const Tabs = ({activeTab, onChange}: TabsPropsType) => {
   const tabsLabel = ["Все (4)", "Фрагменты (3)", "Видео (1)"]
 
   return (
-      <div className='flex flex-col mb-[12px] w-[99%]'>
+      <div className='flex flex-col mb-[12px] w-[75%]'>
         <div className='flex border-white-active border-[1px] rounded-[12px] bg-white self-end'>
           {tabsLabel.map((tab, index) => (
               <span
