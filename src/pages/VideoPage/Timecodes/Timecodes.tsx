@@ -26,7 +26,7 @@ export const Timecodes = memo(({ setTime, playlistId, id }: TimecodesProps) => {
 
   return (
       <div
-          className='h-[469px] scroll-bar overflow-y-scroll w-[546px] rounded-[12px] border-white-active border-[1px] py-[8px] px-[16px]'>
+          className='h-[469px] scroll-bar overflow-y-scroll w-[526px] rounded-[12px] border-white-active border-[1px] py-[8px] px-[16px]'>
         {/*{isLoading && <FullScreenLoader />}*/}
         {data && (
             <ol>
