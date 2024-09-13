@@ -87,7 +87,7 @@ export const InputSearchTimecodes = ({getSearch}: InputSearchTimecodesPropsType)
               onBlur={handleBlur}
             onFocus={handleFocus}
             placeholder='Какие слова ищем в этом видео?'
-            className={`${showBackButton ? 'w-[490px]': 'w-[546px]'} focus:outline-none focus:border-light-gray self-end pl-[16px] pr-[45px] pt-[7px] pb-[7px] border-white-active border-[1px] rounded-[10px] text-[16px] text-dark-blue`}
+            className={`${showBackButton ? 'w-[490px]': 'w-[528px]'} focus:outline-none focus:border-light-gray self-end pl-[16px] pr-[45px] pt-[7px] pb-[7px] border-white-active border-[1px] rounded-[10px] text-[16px] text-dark-blue`}
         />
         <div className='absolute right-[2%] top-[25%]'>
           <SearchIcon/>

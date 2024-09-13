@@ -101,7 +101,7 @@ export const Quiz = ({ goToTime}: QuizProps) => {
   // if (error) return null;
 
   return (
-      <div className='w-[709px] p-[20px] border-white-active border-[1px] rounded-[12px] bg-white'>
+      <div className='mt-[75px] ml-[150px] w-[709px] p-[20px] border-white-active border-[1px] rounded-[12px] bg-white'>
         {/*{isLoading && <FullScreenLoader/>}*/}
 
         {data && !done && (
