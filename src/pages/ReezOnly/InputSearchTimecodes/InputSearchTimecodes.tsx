@@ -72,7 +72,7 @@ export const InputSearchTimecodes = ({getSearch}: InputSearchTimecodesPropsType)
   };
 
   return (
-      <div className='flex gap-[10px] w-[546px] h-[40px]'>
+      <div className='flex gap-[10px] w-[526px] h-[40px]'>
         {showBackButton && <button onClick={handleBackClick}
             className='hover:bg-opacity-80 bg-[#514DF7] pl-3 w-[45px] h-[40px] rounded-[10px]'>
             <img src={backIconWhite} alt="backIcon"/>
