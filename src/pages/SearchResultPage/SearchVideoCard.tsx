@@ -1,5 +1,6 @@
 import {VideoCard} from "@/components/VideoCard/VideoCard";
 import {useGetMovieByIdQuery} from "@/api";
+import {Link} from "react-router-dom";
 
 
 interface SearchVideoCardProps {
@@ -11,7 +12,7 @@ export const SearchVideoCard = ({video}: SearchVideoCardProps) => {
   if (!data) return null;
 
   return (
-      <>
+      <Link to={'/'} state={{fromSearch: true}}>
               <div
                   className='cursor-pointer p-[15px] mb-[12px] flex gap-[20px] bg-white border-[1px] border-[#EDEFF3] rounded-[12px] w-[954px] h-[240px]'>
                 <VideoCard video={data} iframeClassName='w-[320px] h-[208px] rounded-[12px]'/>
@@ -20,6 +21,6 @@ export const SearchVideoCard = ({video}: SearchVideoCardProps) => {
                   <p>{data.description.slice(0, 550)}</p>
                 </p>
               </div>
-      </>
+      </Link>
   )
 };
