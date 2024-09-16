@@ -1,5 +1,5 @@
-import {createApi} from '@reduxjs/toolkit/query/react';
-import {baseQueryWithReauth} from "@/api/baseQueryWithReauth";
+import { createApi } from '@reduxjs/toolkit/query/react';
+import { baseQuery } from './baseQuery';
 
 export const api = createApi({
   reducerPath: 'visaver',
@@ -14,7 +14,7 @@ export const api = createApi({
     'quiz',
     'quizzes',
   ],
-  baseQuery: baseQueryWithReauth,
+  baseQuery,
   endpoints: () => ({}),
   refetchOnReconnect: true,
   // refetchOnFocus: true,

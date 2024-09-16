@@ -3,7 +3,6 @@ import SearchIcon from "../../../components/SVGIcons/SearchIcon";
 import backIconWhite from "../../../components/SVGIcons/BackIconWhite.svg";
 import {useNavigate, useLocation, useSearchParams} from "react-router-dom";
 import {useDebounce} from "@/hooks/useDebounce";
-import ReactGA from "react-ga4";
 
 type InputSearchTimecodesPropsType = {
   getSearch: (value: string) => Promise<void>;
@@ -43,10 +42,6 @@ export const InputSearchTimecodes = ({getSearch}: InputSearchTimecodesPropsType)
         return prev;
       });
       getSearch(data);
-      ReactGA.event({
-        category: 'Search',
-        action: 'Search in playlist',
-      });
     } else {
       setParam((prev) => {
         prev.delete('search');
