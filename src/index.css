@@ -20,7 +20,7 @@ body {
 }
 
 .scroll-bar::-webkit-scrollbar-track {
-    margin-top: 16px;
+    margin-top: 3px;
 }
 
 .scroll-bar::-webkit-scrollbar-thumb {

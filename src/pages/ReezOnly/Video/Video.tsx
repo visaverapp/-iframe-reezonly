@@ -10,6 +10,7 @@ import {useSearchParams} from "react-router-dom";
 
 export const Video = () => {
   const [currentTime] = useState(null);
+  const [showVideoCard, setShowVideoCard] = useState(true);
   const iframe = useRef<YouTube>(null);
   const iframeWrapper = useRef<HTMLDivElement>(null);
   const vkRef = useRef<HTMLIFrameElement>(null);
@@ -21,15 +22,15 @@ export const Video = () => {
 
   const {
     data: video,
-  } = videosAPI.useGetMovieByIdQuery({ id: videoId  ?? '' });
+  } = videosAPI.useGetMovieByIdQuery({id: videoId ?? ''});
 
-  const [getSearchVideos, { data: searchVideos}] =
+  const [getSearchVideos, {data: searchVideos}] =
       playlistsAPI.useLazyGetFullSearchQuery();  //получили все видео плейлиста
 
 
   const getSearchVideosHandler = useCallback(
       async (query: string) => {
-        await getSearchVideos({ query, publicId: playlistId || '' });
+        await getSearchVideos({query, publicId: playlistId || ''});
       },
       [playlistId],
   );
@@ -57,56 +58,58 @@ export const Video = () => {
           const player = window.VK.VideoPlayer(vkRef.current);
           player.seek(time);
 
-          iframeWrapper.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          iframeWrapper.current?.scrollIntoView({behavior: 'smooth', block: 'center'});
           return;
         }
 
         iframe.current?.internalPlayer.seekTo(time, true);
-        iframeWrapper.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        iframeWrapper.current?.scrollIntoView({behavior: 'smooth', block: 'center'});
       },
       [video],
   );
 
   return (
       <div className='w-[100vw] h-[100vh] bg-white-hover'>
-      <div className='flex gap-[14px] w-full h-full bg-white p-[10px]'>
-        <div>
-          <div className='mb-[14px]'>
-            <InputSearchTimecodes getSearch={getSearchVideosHandler} />
+        <div className='flex gap-[14px] w-full h-full bg-white p-[10px]'>
+          <div>
+            <div className='mb-[14px]'>
+              <InputSearchTimecodes getSearch={getSearchVideosHandler}/>
+            </div>
+            {searchVideos ? (
+                    <div
+                        className='h-[469px] scroll-bar overflow-y-scroll w-[526px] rounded-[12px] border-white-active border-[1px] py-[8px] px-[16px]'>
+                      {searchVideos &&
+                          searchVideos.map((fragment) =>
+                              fragment.cues.map((cue, i) => {
+                                if (fragment.publicId === video!.publicId) {
+                                  return (
+                                      //       <Timecodes key={fragment.publicId} setTime={goToTime} currentTime={currentTime} id={videoId} playlistId={playlistId}/>
+                                      <div className='cursor-pointer'>
+                                        <VideoFragmentCard
+                                            fragment={cue}
+                                            key={fragment.publicId + i}
+                                            goToTime={goToTime}
+                                            videoPreview={fragment.thumbnailUrl}
+                                        />
+                                      </div>
+                                  );
+                                }
+                              }),
+                          )}
+                    </div>
+                )
+                : <>{!param.get('search') &&
+                    <Timecodes setTime={goToTime} currentTime={currentTime} id={videoId} playlistId={playlistId}/>}</>
+            }
           </div>
-          {searchVideos ? (
-              <div>
-                {searchVideos &&
-                    searchVideos.map((fragment) =>
-                        fragment.cues.map((cue, i) => {
-                          if (fragment.publicId === video!.publicId) {
-                            return (
-                          //       <Timecodes key={fragment.publicId} setTime={goToTime} currentTime={currentTime} id={videoId} playlistId={playlistId}/>
-                                <VideoFragmentCard
-                                    fragment={cue}
-                                    key={fragment.publicId + i}
-                                    goToTime={goToTime}
-                                    videoPreview={fragment.thumbnailUrl}
-                                />
-                            );
-                          }
-                        }),
-                    )}
-              </div>
-          )
-              : <>{!param.get('search') && <Timecodes setTime={goToTime} currentTime={currentTime} id={videoId} playlistId={playlistId}/>}</>
-          }
-
-
-            {/*<Timecodes setTime={goToTime} currentTime={currentTime} id={videoId} playlistId={playlistId}/>*/}
-        </div>
-        <div>
-          <div className='mb-[14px]'>
-            {video && <VideoCard setCurrentTime={()=>{}} video={video} iframeClassName='w-[440px] h-[252px] rounded-[12px]'/>}
+          <div>
+            <div className={`${showVideoCard ? 'mb-[14px]' : ''}`}>
+              {showVideoCard && video && <VideoCard setCurrentTime={() => {
+              }} video={video} iframeClassName='w-[440px] h-[252px] rounded-[12px]'/>}
+            </div>
+            <Summary id={videoId} playlistId={playlistId} onChange={(value) => setShowVideoCard(value)}/>
           </div>
-          <Summary id={videoId} playlistId={playlistId}/>
         </div>
-      </div>
       </div>
   );
 };

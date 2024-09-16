@@ -4,14 +4,14 @@ import backIconWhite from "../../../components/SVGIcons/BackIconWhite.svg";
 import {useNavigate, useLocation, useSearchParams} from "react-router-dom";
 import {useDebounce} from "@/hooks/useDebounce";
 import ReactGA from "react-ga4";
+import {ClearIcon} from "@/components/SearchTimecodesVideoInput/images/ClearIcon";
 
 type InputSearchTimecodesPropsType = {
   getSearch: (value: string) => Promise<void>;
-
 }
 
 export const InputSearchTimecodes = ({getSearch}: InputSearchTimecodesPropsType) => {
-  const [, setIsFocused] = useState(false);
+  const [,setIsFocused] = useState(false);
   const [showBackButton, setShowBackButton] = useState(false);
   const [param, setParam] = useSearchParams();
   const location = useLocation();
@@ -70,6 +70,9 @@ export const InputSearchTimecodes = ({getSearch}: InputSearchTimecodesPropsType)
   const onSearch = () => {
     makeSearch();
   };
+  const clearInput = () => {
+    searchInputRef.current!.value = '';
+  };
 
   return (
       <div className='flex gap-[10px] w-[526px] h-[40px]'>
@@ -86,12 +89,17 @@ export const InputSearchTimecodes = ({getSearch}: InputSearchTimecodesPropsType)
               onChange={onSearch}
               onBlur={handleBlur}
             onFocus={handleFocus}
-            placeholder='Какие слова ищем в этом видео?'
+            placeholder='Что ищем в этом видео?'
             className={`${showBackButton ? 'w-[490px]': 'w-[528px]'} focus:outline-none focus:border-light-gray self-end pl-[16px] pr-[45px] pt-[7px] pb-[7px] border-white-active border-[1px] rounded-[10px] text-[16px] text-dark-blue`}
         />
-        <div className='absolute right-[2%] top-[25%]'>
-          <SearchIcon/>
-        </div>
+          {!searchInputRef ?
+              <div className='absolute right-[2%] top-[25%]'>
+                <SearchIcon/>
+              </div>
+              : <div onClick={clearInput} className='cursor-pointer absolute right-[3%] top-[35%]'>
+                <ClearIcon/>
+              </div>
+          }
         </div>
       </div>
   );

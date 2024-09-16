@@ -5,7 +5,7 @@ import {
   ResultVideoInnerWithScreenShot
 } from "@/pages/Search/components/ResultVideoInnerWithScreenShot/ResultVideoInnerWithScreenShot";
 import {SearchVideoCard} from "@/pages/SearchResultPage/SearchVideoCard";
-import {playlistsAPI} from "@/api";
+import {playlistsAPI, useGetFullSearchQuery} from "@/api";
 import {useDebounce} from "@/hooks/useDebounce";
 import {useSearchParams} from "react-router-dom";
 import backIcon from "@/components/SVGIcons/BackIcon.svg";
@@ -27,13 +27,19 @@ export const SearchResultPage = () => {
     if (data) {
       setParams({search: data});
     } else {
-      setParams({});
+      setParams('');
     }
   }, 500);
 
   const onSearch = () => {
     makeSearch();
   };
+  //
+  // const exactSearch = useGetFullSearchQuery({publicId:'59609dd8-7ef4-4080-9cb8-3c2cab266494', query: search.current?.value || params.get('search') || '', onlyTranscripts: 1 })
+  // const searchExact = ()=> {
+  //
+  //   console.log(exactSearch)
+  // }
 
   return (
       <div>
@@ -48,8 +54,8 @@ export const SearchResultPage = () => {
                 ref={search}
                 onChange={onSearch}
                 defaultValue={params.get('search') ?? ''}
-                placeholder='Какие слова ищем в этом курсе?'
-                className='w-[940px] h-[40px] focus:outline-none focus:border-light-gray self-end pl-[16px] pr-[45px] pt-[7px] pb-[10px] border-[#EDEFF3] border-[1px] rounded-[9px] text-[16px] text-dark-blue'
+                placeholder='Что ищем в этом курсе?'
+                className='w-[936px] h-[40px] focus:outline-none focus:border-light-gray self-end pl-[16px] pr-[45px] pt-[7px] pb-[10px] border-[#EDEFF3] border-[1px] rounded-[9px] text-[16px] text-dark-blue'
             />
             <div className='absolute right-[2%] top-[20%]'>
               <SearchIcon/>
@@ -57,10 +63,9 @@ export const SearchResultPage = () => {
           </div>
           {/*<SearchInput suggestionsList={[]}/>*/}
         </div>
-        <div>
-          <div className=''>
-            <Toggle title='Искать по точному совпадению' checked={isChecked} onChange={() => {
-            }}/>
+        <div className='w-[79%]'>
+          <div className='max-w-max'>
+            <Toggle title='Искать по точному совпадению' checked={isChecked} onChange={()=>{}}/>
           </div>
           <Tabs activeTab={activeTab} onChange={(index: number) => setActiveTab(index)}/>
         </div>

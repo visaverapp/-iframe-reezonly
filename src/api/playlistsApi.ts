@@ -66,11 +66,11 @@ export const playlistsAPI = api.injectEndpoints({
       providesTags: ['personal_playlists'],
     }),
 
-    getFullSearch: build.query<VideoWithFragments[], Pick<Playlist, 'publicId'> & { query: string }>({
-      query: ({ publicId, query }) => ({
+    getFullSearch: build.query<VideoWithFragments[], Pick<Playlist, 'publicId'> & { query: string, onlyTranscripts?: number}>({
+      query: ({ publicId, query, onlyTranscripts }) => ({
         url: `${path}/${publicId}/full_search/`,
         method: 'GET',
-        params: { query },
+        params: { query, onlyTranscripts },
       }),
 
       transformResponse: (data: VideoWithFragments[]) => {
@@ -81,6 +81,7 @@ export const playlistsAPI = api.injectEndpoints({
         }));
       },
     }),
+
 //таймкоды
     getTimecodes: build.query<Timecode[], TimecodesRequest>({
       query: ({ playlistId, videoPublicId }) => ({

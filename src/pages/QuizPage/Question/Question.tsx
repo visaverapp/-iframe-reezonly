@@ -84,8 +84,3 @@ export const Question = ({ answers, correctAnswer, currentAnswer, question, goTo
     </div>
   );
 };
-
-
-// className={`${isLastQuestion ? 'bg-milk-white' : 'bg-indigo'} px-[30px] py-[4px] rounded-[8px]`}
-
-// stroke={`${!isLastQuestion ? '#FFFFFF' : '#8492A6'}`}
