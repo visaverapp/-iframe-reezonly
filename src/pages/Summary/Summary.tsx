@@ -160,7 +160,7 @@ export const Summary = ({onChange}: SummaryProps) => {
           </ul>
           <p className='text-dark-blue font-open-sans text-[14px] font-normal pb-[8px]'>Также можно использовать индустриальные
             отчеты, отчеты консалтинговых компаний и другие открытые источники.</p>
-          <div className='fixed bottom-[44%] right-[22%]'>
+          <div className='fixed bottom-[5%] right-[3%]'>
           <span className='cursor-pointer text-[#6F42C1] font-open-sans font-normal text-[14px]'
                 onClick={onCollapsedClick}>
             {isCollapsed ? 'Развернуть' : 'Свернуть'}

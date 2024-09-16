@@ -43,7 +43,7 @@ export const SearchResultPage = () => {
 
   return (
       <div>
-        <div className='flex gap-[5px] pb-[12px]'>
+        <div className='flex gap-[5px] pl-[7px] pb-[12px]'>
           <button
               className='hover:bg-white-hover pl-3 w-[45px] h-[40px] rounded-[9px] border-[#EDEFF3] border-[1px]'>
             <img src={backIcon} alt="backIcon"/>
@@ -55,7 +55,7 @@ export const SearchResultPage = () => {
                 onChange={onSearch}
                 defaultValue={params.get('search') ?? ''}
                 placeholder='Что ищем в этом курсе?'
-                className='w-[936px] h-[40px] focus:outline-none focus:border-light-gray self-end pl-[16px] pr-[45px] pt-[7px] pb-[10px] border-[#EDEFF3] border-[1px] rounded-[9px] text-[16px] text-dark-blue'
+                className='w-[904px] h-[40px] focus:outline-none focus:border-light-gray self-end pl-[16px] pr-[45px] pt-[7px] pb-[10px] border-[#EDEFF3] border-[1px] rounded-[9px] text-[16px] text-dark-blue'
             />
             <div className='absolute right-[2%] top-[20%]'>
               <SearchIcon/>
@@ -63,8 +63,8 @@ export const SearchResultPage = () => {
           </div>
           {/*<SearchInput suggestionsList={[]}/>*/}
         </div>
-        <div className='w-[79%]'>
-          <div className='max-w-max'>
+        <div className='w-[97%]'>
+          <div className='max-w-max pl-[9px]'>
             <Toggle title='Искать по точному совпадению' checked={isChecked} onChange={()=>{}}/>
           </div>
           <Tabs activeTab={activeTab} onChange={(index: number) => setActiveTab(index)}/>
