@@ -75,7 +75,7 @@ export const Video = () => {
             <div className='mb-[14px]'>
               <InputSearchTimecodes getSearch={getSearchVideosHandler}/>
             </div>
-            {searchVideos ? (
+            {searchVideos && param.get('search') && (
                     <div
                         className='h-[469px] scroll-bar overflow-y-scroll w-[526px] rounded-[12px] border-white-active border-[1px] py-[8px] px-[16px]'>
                       {searchVideos &&
@@ -97,10 +97,9 @@ export const Video = () => {
                               }),
                           )}
                     </div>
-                )
-                : <>{!param.get('search') &&
-                    <Timecodes setTime={goToTime} currentTime={currentTime} id={videoId} playlistId={playlistId}/>}</>
-            }
+                )}
+
+            {!param.get('search') && <Timecodes setTime={goToTime} currentTime={currentTime} id={videoId} playlistId={playlistId}/>}
           </div>
           <div>
             <div className={`${showVideoCard ? 'mb-[14px]' : ''}`}>

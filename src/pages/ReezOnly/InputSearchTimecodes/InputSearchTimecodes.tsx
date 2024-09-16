@@ -11,7 +11,7 @@ type InputSearchTimecodesPropsType = {
 }
 
 export const InputSearchTimecodes = ({getSearch}: InputSearchTimecodesPropsType) => {
-  const [,setIsFocused] = useState(false);
+  const [isFocused,setIsFocused] = useState(false);
   const [showBackButton, setShowBackButton] = useState(false);
   const [param, setParam] = useSearchParams();
   const location = useLocation();
@@ -72,6 +72,7 @@ export const InputSearchTimecodes = ({getSearch}: InputSearchTimecodesPropsType)
   };
   const clearInput = () => {
     searchInputRef.current!.value = '';
+    setParam('')
   };
 
   return (
@@ -92,7 +93,7 @@ export const InputSearchTimecodes = ({getSearch}: InputSearchTimecodesPropsType)
             placeholder='Что ищем в этом видео?'
             className={`${showBackButton ? 'w-[490px]': 'w-[528px]'} focus:outline-none focus:border-light-gray self-end pl-[16px] pr-[45px] pt-[7px] pb-[7px] border-white-active border-[1px] rounded-[10px] text-[16px] text-dark-blue`}
         />
-          {!searchInputRef ?
+          {!isFocused && !param.get('search') ?
               <div className='absolute right-[2%] top-[25%]'>
                 <SearchIcon/>
               </div>
