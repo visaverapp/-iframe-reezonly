@@ -5,7 +5,7 @@ import {
   ResultVideoInnerWithScreenShot
 } from "@/pages/Search/components/ResultVideoInnerWithScreenShot/ResultVideoInnerWithScreenShot";
 import {SearchVideoCard} from "@/pages/SearchResultPage/SearchVideoCard";
-import {playlistsAPI, useGetFullSearchQuery} from "@/api";
+import {playlistsAPI} from "@/api";
 import {useDebounce} from "@/hooks/useDebounce";
 import {useSearchParams} from "react-router-dom";
 import backIcon from "@/components/SVGIcons/BackIcon.svg";

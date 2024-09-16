@@ -1,4 +1,3 @@
-import {SearchStartPage} from "@/pages/ReezOnly/SearchStartPage/SearchStartPage";
 import {SearchResultPage} from "@/pages/SearchResultPage/SearchResultPage";
 
 export const SearchLayout = () => {

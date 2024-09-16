@@ -12,7 +12,7 @@ interface TimecodesProps {
 
 export const Timecodes = memo(({setTime, playlistId, id}: TimecodesProps) => {
   const [showTextIndex, setShowTextIndex] = useState(null)
-  const [isCollapsed, setIsCollapsed] = useState(false)
+  // const [isCollapsed, setIsCollapsed] = useState(false)
 
   const {data, isLoading} = useGetTimecodesQuery({playlistId: playlistId, videoPublicId: id});
   // const timings = data?.map((array) => array.start) || [];
@@ -21,9 +21,9 @@ export const Timecodes = memo(({setTime, playlistId, id}: TimecodesProps) => {
     setShowTextIndex(prevIndex => (prevIndex === index ? null : index));
   };
 
-  const onReadMoreClick = () => {
-    setIsCollapsed(!isCollapsed);
-  };
+  // const onReadMoreClick = () => {
+  //   setIsCollapsed(!isCollapsed);
+  // };
 
   return (
       <div
