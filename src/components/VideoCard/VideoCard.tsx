@@ -1,44 +1,18 @@
-import {useMemo, useRef} from "react";
-import YouTube, {YouTubeProps} from "react-youtube";
-import {useSearchParams} from "react-router-dom";
+import {memo, useRef} from "react";
+import YouTube from "react-youtube";
 
 interface VideoCardProps {
   video: any
   iframeClassName: string
-  setCurrentTime?: (time: number | null) =>void
+  setCurrentTime?: any
+  startsForm?: number
+  iframe?: any
+  onStateChange?: any
+  goToTimeFunc?: any
 }
 
-export const VideoCard = ({video, iframeClassName}:VideoCardProps) => {
+export const VideoCard = memo(({video, iframeClassName, iframe, startsForm, goToTimeFunc, onStateChange}:VideoCardProps) => {
   const iframeWrapper = useRef<HTMLDivElement>(null);
-  const iframe = useRef<YouTube>(null);
-  const [params] = useSearchParams();
-
-
-  const startsForm = useMemo(() => {
-    const time = params.get('t');
-    return time ? parseInt(time) : 0;
-  }, [params]);
-
-  // const getCurrentTimeFunc = async () => {
-  //   setCurrentTime((await iframe.current?.internalPlayer.getCurrentTime()) || 0);
-  // };
-
-  // let timerId: number;
-  const onStateChange: YouTubeProps['onStateChange'] = () => {
-  //   if (event.data === 1) {
-  //     timerId = setInterval(() => {
-  //       getCurrentTimeFunc();
-  //     }, 1000);
-  //   } else if (event.data === 2) {
-  //     clearInterval(timerId);
-  //   }
-  };
-
-  // const goToTimeFunc = async (event: YouTubeEvent) => {
-  //   await event.target.seekTo(params.get('t') ?? 0, true);
-  //   await event.target.playVideo();
-  // };
-
 
   return (
       <div ref={iframeWrapper}>
@@ -48,7 +22,7 @@ export const VideoCard = ({video, iframeClassName}:VideoCardProps) => {
                      title={video.title}
                      ref={iframe}
                      onStateChange={onStateChange}
-                     // onReady={goToTimeFunc}
+                     onReady={goToTimeFunc}
                      opts={{
                        playerVars: {
                          start: video.startsFrom || startsForm,
@@ -60,5 +34,5 @@ export const VideoCard = ({video, iframeClassName}:VideoCardProps) => {
         )}
       </div>
   );
-};
+})
 

@@ -1,24 +1,21 @@
 import {VideoCard} from "@/components/VideoCard/VideoCard";
 import {Summary} from "@/pages/Summary/Summary";
-import {useCallback, useRef, useState} from "react";
+import {useCallback, useMemo, useRef, useState} from "react";
 import {InputSearchTimecodes} from "@/pages/ReezOnly/InputSearchTimecodes/InputSearchTimecodes";
 import {playlistsAPI, videosAPI} from "@/api";
-import YouTube from "react-youtube";
+import YouTube, {YouTubeEvent, YouTubeProps} from "react-youtube";
 import {Timecodes} from "@/pages/VideoPage/Timecodes/Timecodes";
 import {VideoFragmentCard} from "@/components/Card/VideoFragmentCard";
 import {useSearchParams} from "react-router-dom";
 
 export const Video = () => {
-  const [currentTime] = useState(null);
   const [showVideoCard, setShowVideoCard] = useState(true);
+  const [currentTime, setCurrentTime] = useState(null);
   const iframe = useRef<YouTube>(null);
   const iframeWrapper = useRef<HTMLDivElement>(null);
-  const vkRef = useRef<HTMLIFrameElement>(null);
-  const [param] = useSearchParams();
+  const [params] = useSearchParams();
   const playlistId = "59609dd8-7ef4-4080-9cb8-3c2cab266494"
   const videoId = "5ec5bb33-9c1e-4295-8a82-ca36138da3cb"
-  // const [filteredTimecodes, setFilteredTimecodes] = useState([]);
-  // const [searchQuery, setSearchQuery] = useState('');
 
   const {
     data: video,
@@ -35,38 +32,39 @@ export const Video = () => {
       [playlistId],
   );
 
-  // const filterTimecodes = (timecodes: any) => {
-  //   if (!searchQuery) return timecodes; // Если нет запроса, вернуть все таймкоды
-  //   return timecodes.filter(tc =>
-  //       tc.text.toLowerCase().includes(searchQuery.toLowerCase())
-  //   );
-  // };
-  //
-  // useEffect(() => {
-  //    if (searchVideos) {
-  //     const filtered = filterTimecodes(searchVideos);
-  //     setFilteredTimecodes(filtered);
-  //   }
-  // }, [searchVideos, searchQuery]);
+  const getCurrentTimeFunc = async () => {
+    setCurrentTime((await iframe.current?.internalPlayer.getCurrentTime()) || 0);
+  };
 
-  const goToTime = useCallback(
-      (time: number) => {
-        if (video && video.source === 'VK' && vkRef.current) {
-          // TODO разобраться с типизацией
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          const player = window.VK.VideoPlayer(vkRef.current);
-          player.seek(time);
+  let timerId: number;
+  const onStateChange: YouTubeProps['onStateChange'] = (event) => {
+    if (event.data === 1) {
+      timerId = setInterval(() => {
+        getCurrentTimeFunc();
+      }, 1000);
+    } else if (event.data === 2) {
+      clearInterval(timerId);
+    }
+  };
 
-          iframeWrapper.current?.scrollIntoView({behavior: 'smooth', block: 'center'});
-          return;
-        }
+  const goToTimeFunc = (event: YouTubeEvent) => {
+    const time = params.get('t') ?? 0;
+    event.target.seekTo(time, true);
+    event.target.playVideo();
+  };
 
-        iframe.current?.internalPlayer.seekTo(time, true);
-        iframeWrapper.current?.scrollIntoView({behavior: 'smooth', block: 'center'});
-      },
-      [video],
-  );
+  const goToTime = (time: number) => {
+    console.log("Переход к времени:", time);
+
+    iframe.current?.internalPlayer.seekTo(time, true);
+    iframeWrapper.current?.scrollIntoView({behavior: 'smooth', block: 'center'});
+  }
+
+
+  const startsForm = useMemo(() => {
+    const time = params.get('t');
+    return time ? parseInt(time) : 0;
+  }, [params]);
 
   return (
       <div className='w-[100vw] h-[100vh] bg-white-hover'>
@@ -75,7 +73,7 @@ export const Video = () => {
             <div className='mb-[14px]'>
               <InputSearchTimecodes getSearch={getSearchVideosHandler}/>
             </div>
-            {searchVideos && param.get('search') && (
+            {searchVideos && params.get('search') && (
                     <div
                         className='h-[469px] scroll-bar overflow-y-scroll w-[526px] rounded-[12px] border-white-active border-[1px] py-[8px] px-[16px]'>
                       {searchVideos &&
@@ -83,7 +81,6 @@ export const Video = () => {
                               fragment.cues.map((cue, i) => {
                                 if (fragment.publicId === video!.publicId) {
                                   return (
-                                      //       <Timecodes key={fragment.publicId} setTime={goToTime} currentTime={currentTime} id={videoId} playlistId={playlistId}/>
                                       <div className='cursor-pointer'>
                                         <VideoFragmentCard
                                             fragment={cue}
@@ -99,12 +96,17 @@ export const Video = () => {
                     </div>
                 )}
 
-            {!param.get('search') && <Timecodes setTime={goToTime} currentTime={currentTime} id={videoId} playlistId={playlistId}/>}
+            {!params.get('search') && <Timecodes setTime={goToTime} currentTime={currentTime} id={videoId} playlistId={playlistId}/>}
           </div>
           <div>
             <div className={`${showVideoCard ? 'mb-[14px]' : ''}`}>
-              {showVideoCard && video && <VideoCard setCurrentTime={() => {
-              }} video={video} iframeClassName='w-[440px] h-[252px] rounded-[12px]'/>}
+              {showVideoCard && video && <VideoCard video={video}
+                                                    onStateChange={onStateChange}
+                                                    goToTimeFunc={goToTimeFunc}
+                                                    iframe={iframe}
+                                                    startsForm={startsForm}
+                                                    setCurrentTime={setCurrentTime}
+                                                    iframeClassName='w-[440px] h-[252px] rounded-[12px]'/>}
             </div>
             <Summary id={videoId} playlistId={playlistId} onChange={(value) => setShowVideoCard(value)}/>
           </div>

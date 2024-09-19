@@ -10,12 +10,17 @@ interface TimecodesProps {
   currentTime: number | null;
 }
 
-export const Timecodes = memo(({setTime, playlistId, id}: TimecodesProps) => {
+export const Timecodes = memo(({setTime, playlistId, id, currentTime}: TimecodesProps) => {
   const [showTextIndex, setShowTextIndex] = useState(null)
   // const [isCollapsed, setIsCollapsed] = useState(false)
 
   const {data, isLoading} = useGetTimecodesQuery({playlistId: playlistId, videoPublicId: id});
-  // const timings = data?.map((array) => array.start) || [];
+
+  const timings = data?.map((array) => array.start) || [];
+
+  const highlightChapter = (i: number) => {
+    return currentTime != null && currentTime >= timings[i] && (timings[i + 1] === undefined || currentTime < timings[i + 1]);
+  };
 
   const toggleText = (index: any) => {
     setShowTextIndex(prevIndex => (prevIndex === index ? null : index));
@@ -27,14 +32,13 @@ export const Timecodes = memo(({setTime, playlistId, id}: TimecodesProps) => {
 
   return (
       <div
-          className='h-[469px] scroll-bar overflow-y-scroll w-[526px] rounded-[12px] border-white-active border-[1px] py-[8px] px-[16px]'>
+          className='h-[469px] w-[526px] rounded-[12px] border-white-active border-[1px] py-[8px] px-[3px]'>
         {isLoading && <FullScreenLoader/>}
         {data && (
-            <ol>
+            <ol className='scroll-bar overflow-y-scroll h-[459px]'>
               {data.map(({start, text, title}, i) => (
-                  <li
-                      className='cursor-pointer rounded-[12px] pb-[8px] pr-[8px]' key={i}>
-                    <div onClick={() => setTime(start)}>
+                  <li onClick={() => setTime(start)} className={`${highlightChapter(i) ? 'bg-[#E5E9F2]' : 'bg-white'} cursor-pointer rounded-[12px] pb-[8px] px-[8px]`} key={i}>
+                    <div>
                       <span
                           className='text-[#6F42C1] font-open-sans font-bold text-[14px] pr-[5px]'>{secondsToTime(start)}</span>
                       <span className='text-dark-blue font-open-sans font-bold text-[14px]'>{title}</span>
