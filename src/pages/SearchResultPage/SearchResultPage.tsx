@@ -175,5 +175,5 @@ export const SearchResultPage = ({startSearchPageSettings}: SearchInputPropsType
 
 export const highlightTextSearchPage = (text: string, search: string) => {
   const regex = new RegExp(`(${search})`, 'gi');
-  return text.replace(regex, '<b class="color-highlightText">$1</b>');
+  return text.replace(regex, '<span class="color-highlightText">$1</span>');
 };
