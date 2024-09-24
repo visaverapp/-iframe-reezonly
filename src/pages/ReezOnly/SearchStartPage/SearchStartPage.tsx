@@ -54,7 +54,7 @@ export const SearchStartPage = () => {
   };
 
   return (
-      <div className='flex flex-col gap-[100px] mt-[10%] max-w-[900px]'>
+      <div className='flex flex-col gap-[100px] pt-[73px] max-w-[900px]'>
         <div className='relative'>
           <input
               type="text"
