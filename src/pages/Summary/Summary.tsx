@@ -142,7 +142,7 @@ export const Summary = ({onChange}: SummaryProps) => {
           </ol>
           <p className='pb-[10px] text-dark-blue font-open-sans text-[14px] font-normal'>Есть сервисы, которые
             предоставляют информацию о клиентах.</p>
-          <ul className='pb-[10px]'>Например:
+          <ul className='pb-[10px] text-dark-blue font-open-sans text-[14px] font-normal'>Например:
             <li className='text-dark-blue font-open-sans text-[14px] font-normal'><span
                 className='text-dark-blue font-open-sans text-[14px] font-bold'>UberSuggest</span> — помогает понять,
               какие
@@ -163,7 +163,7 @@ export const Summary = ({onChange}: SummaryProps) => {
           <div className='fixed bottom-[5%] right-[3%]'>
           <span className='cursor-pointer text-[#6F42C1] font-open-sans font-normal text-[14px]'
                 onClick={onCollapsedClick}>
-            {isCollapsed ? 'Развернуть' : 'Свернуть'}
+            {isCollapsed ? 'Свернуть' : 'Развернуть'}
           </span>
           </div>
           </div>

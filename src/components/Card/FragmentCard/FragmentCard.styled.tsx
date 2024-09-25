@@ -1,8 +1,8 @@
-import { FragmentCardProps } from './FragmentCard.props';
+import {FragmentCardProps, PlaylistCardStyleProps} from './FragmentCard.props';
 
 import styled from 'styled-components';
 
-import { LabelText } from '@/styles';
+import {LabelText, theme} from '@/styles';
 
 export const FragmentCardStyled = styled.div`
     width: 236px;
@@ -14,6 +14,11 @@ export const FragmentCardStyled = styled.div`
     gap: 8px;
     border-radius: 8px;
     background-color: #E6E6EA;
+    position: relative;
+    
+    :hover {
+        background: #F4F4F4;
+    }
 `;
 
 export const VideoTime = styled.div`
@@ -37,6 +42,7 @@ export const VideoImageWrapper = styled.div<Pick<FragmentCardProps, 'background_
     background-position: center;
     height: 128px;
     border-radius: 12px;
+    position: relative;
 `;
 
 export const Description = styled(LabelText)`
@@ -54,4 +60,32 @@ export const Time = styled(LabelText)`
     font-weight: 700;
     line-height: 140%;
     text-align: left;
+`;
+
+
+export const ImageWrapper = styled.div<PlaylistCardStyleProps>`
+  background-color: ${theme.colors.White};
+  background-image: url(${({ bgImage }) => `${bgImage}`});
+  background-size: cover;
+  background-position: center center;
+  border-radius: 20px;
+  height: 200px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 16px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+`;
+export const ImageFragmentWrapper = styled(ImageWrapper)`
+  height: 200px;
+`;
+export const PlayButton = styled.button`
+    position: absolute;
+    left: 50%;
+    top: 30%;
+    z-index: 10;
+    opacity: 0.3;
+    transform: translate(-50%, -50%);
 `;

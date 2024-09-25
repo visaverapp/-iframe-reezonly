@@ -1,6 +1,6 @@
 import {Tabs} from "@/components/Tabs/Tabs";
 import {Toggle} from '@/components/Toggle/Toggle';
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useMemo, useRef, useState} from "react";
 import {
   ResultVideoInnerWithScreenShot
 } from "@/pages/Search/components/ResultVideoInnerWithScreenShot/ResultVideoInnerWithScreenShot";
@@ -12,6 +12,7 @@ import backIcon from "@/components/SVGIcons/BackIcon.svg";
 import SearchIcon from "@/components/SVGIcons/SearchIcon";
 import {FragmentPlayIconSuggetions} from "@/components/SVGIcons/FragmentPlayIconSuggetions";
 import {PlayIconSuggetions} from "@/components/SVGIcons/PlayIconSuggetions";
+import {ClearIcon} from "@/components/SearchTimecodesVideoInput/images/ClearIcon";
 
 export type SearchInputPropsType = {
   startSearchPageSettings?: {
@@ -24,6 +25,7 @@ export type SearchInputPropsType = {
 export const SearchResultPage = ({startSearchPageSettings}: SearchInputPropsType) => {
   const [params, setParams] = useSearchParams();
   const [isChecked] = useState(false)
+  const [isFocused,setIsFocused] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
   const search = useRef<HTMLInputElement | null>(null);
   const [toggleActive, setToggleActive] = useState(false);
@@ -39,6 +41,7 @@ export const SearchResultPage = ({startSearchPageSettings}: SearchInputPropsType
     query: search.current?.value || params.get("search") || ""
   });
 
+
   useEffect(() => {
     if (videoWithFragment) {
       const suggetionsFragment = videoWithFragment.map(fragment => (
@@ -53,8 +56,16 @@ export const SearchResultPage = ({startSearchPageSettings}: SearchInputPropsType
     }
   }, [videoWithFragment])
 
-  const searchItemCountAll = `${videos && videoWithFragment ? videos.length + videoWithFragment.length : ''}`
-  const tabs = [`Все (${searchItemCountAll})`, `Фрагменты (${videoWithFragment?.length})`, `Видео (${videos?.length})`]
+  const countFragments = useMemo(() => {
+    if (!videoWithFragment) return 0;
+    return videoWithFragment.reduce((total, fragment) => {
+      return total + (fragment.cues?.length || 0);
+    }, 0);
+  }, [videoWithFragment]);
+
+  const searchItemCountAll = `${videos && videoWithFragment ? videos.length + countFragments : ''}`
+  const tabs = [`Все (${toggleActive && params.get('search') ? videoWithFragment ? countFragments : 0 :searchItemCountAll})`, `Фрагменты (${countFragments})`, `Видео (${toggleActive && params.get('search') ? 0 : videos ? videos.length : 0})`]
+
 
   const makeSearch = useDebounce(() => {
     const data = search.current?.value || '';
@@ -70,6 +81,16 @@ export const SearchResultPage = ({startSearchPageSettings}: SearchInputPropsType
     makeSearch();
   };
 
+  const handleFocus = () => {
+    setIsFocused(true);
+  };
+
+  const handleBlur = () => {
+    if (search.current && search.current.value === '') {
+      setIsFocused(false);
+    }
+  };
+
   const pickSuggestion = () => {
     if (startSearchPageSettings) {
       navigate(`${startSearchPageSettings.navigatePath}`);
@@ -78,10 +99,18 @@ export const SearchResultPage = ({startSearchPageSettings}: SearchInputPropsType
     }
   };
 
+  const clearInput = () => {
+    if (search.current) {
+      search.current.value = '';
+      search.current!.focus();
+    }
+    setParams('');
+  };
+
   return (
       <div>
         <div className='flex gap-[5px] pl-[7px] pb-[12px]'>
-          <Link to={'/'}>
+          <Link to={'/full-search'}>
             <button
                 className='hover:bg-white-hover pl-3 w-[45px] h-[40px] rounded-[9px] border-[#EDEFF3] border-[1px]'>
               <img src={backIcon} alt="backIcon"/>
@@ -91,14 +120,21 @@ export const SearchResultPage = ({startSearchPageSettings}: SearchInputPropsType
             <input
                 type="text"
                 ref={search}
+                onBlur={handleBlur}
+                onFocus={handleFocus}
                 onChange={onSearch}
                 defaultValue={params.get('search') ?? ''}
                 placeholder='Что ищем в этом курсе?'
                 className='w-[904px] h-[40px] focus:outline-none self-end pl-[16px] pr-[45px] pt-[7px] pb-[10px] border-[#8492A6] border-[1px] rounded-[9px] text-[16px] text-dark-blue'
             />
-            <div className='absolute right-[2%] top-[20%]'>
-              <SearchIcon/>
-            </div>
+            {!isFocused && !params.get('search') ?
+                <div className='absolute right-[2%] top-[25%]'>
+                  <SearchIcon/>
+                </div>
+                : <div onClick={clearInput} className='cursor-pointer absolute right-[3%] top-[35%]'>
+                  <ClearIcon/>
+                </div>
+            }
           </div>
 
           {suggetions.length > 0 && open && params.get('search') && (

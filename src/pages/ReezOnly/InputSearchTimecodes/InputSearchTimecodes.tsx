@@ -64,15 +64,20 @@ export const InputSearchTimecodes = ({getSearch}: InputSearchTimecodesPropsType)
   };
 
   const handleBlur = () => {
-    setIsFocused(false);
+    if (searchInputRef.current && searchInputRef.current.value === '') {
+      setIsFocused(false);
+    }
   };
 
   const onSearch = () => {
     makeSearch();
   };
   const clearInput = () => {
-    searchInputRef.current!.value = '';
-    setParam('')
+    if (searchInputRef.current) {
+      searchInputRef.current.value = '';
+      searchInputRef.current!.focus();
+    }
+    setParam('');
   };
 
   return (

@@ -81,7 +81,7 @@ export const Video = () => {
                               fragment.cues.map((cue, i) => {
                                 if (fragment.publicId === video!.publicId) {
                                   return (
-                                      <div className='cursor-pointer'>
+                                      <div className='cursor-pointer hover:bg-white-hover'>
                                         <VideoFragmentCard
                                             fragment={cue}
                                             key={fragment.publicId + i}
