@@ -107,6 +107,15 @@ export const SearchResultPage = ({startSearchPageSettings}: SearchInputPropsType
     setParams('');
   };
 
+  const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && location.pathname.includes('full-search')) {
+      pickSuggestion()
+    } else if (e.key === "Enter" && location.pathname.includes('search')) {
+      setOpen(false)
+      makeSearch();
+    }
+  }
+
   return (
       <div>
         <div className='flex gap-[5px] pl-[7px] pb-[12px]'>
@@ -123,6 +132,7 @@ export const SearchResultPage = ({startSearchPageSettings}: SearchInputPropsType
                 onBlur={handleBlur}
                 onFocus={handleFocus}
                 onChange={onSearch}
+                onKeyDown={onKeyDownHandler}
                 defaultValue={params.get('search') ?? ''}
                 placeholder='Что ищем в этом курсе?'
                 className='w-[904px] h-[40px] focus:outline-none self-end pl-[16px] pr-[45px] pt-[7px] pb-[10px] border-[#8492A6] border-[1px] rounded-[9px] text-[16px] text-dark-blue'

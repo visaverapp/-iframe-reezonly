@@ -14,7 +14,7 @@ export const SearchVideoCard = ({video}: SearchVideoCardProps) => {
   return (
       <Link to={'/'} state={{fromSearch: true}}>
               <div
-                  className='cursor-pointer p-[15px] mb-[12px] flex gap-[20px] bg-white border-[1px] border-[#EDEFF3] rounded-[12px] w-[954px] h-[240px]'>
+                  className='hover:bg-white-hover cursor-pointer p-[15px] mb-[12px] flex gap-[20px] bg-white border-[1px] border-[#EDEFF3] rounded-[12px] w-[954px] h-[240px]'>
                 <VideoCard video={data} iframeClassName='w-[320px] h-[208px] rounded-[12px]'/>
                 <p className='font-open-sans font-normal text-[14px] text-indigo'>
                   <p className='font-open-sans font-bold text-[14px] text-indigo pt-[30px]'>{data.title}</p>
