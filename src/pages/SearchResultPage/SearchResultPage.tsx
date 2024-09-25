@@ -1,6 +1,6 @@
 import {Tabs} from "@/components/Tabs/Tabs";
 import {Toggle} from '@/components/Toggle/Toggle';
-import {useEffect, useMemo, useRef, useState} from "react";
+import {useEffect, useMemo, useRef, useState, KeyboardEvent} from "react";
 import {
   ResultVideoInnerWithScreenShot
 } from "@/pages/Search/components/ResultVideoInnerWithScreenShot/ResultVideoInnerWithScreenShot";
